@@ -13,7 +13,10 @@ export default function Footer({ sticky = false }: FooterProps) {
       )}
     >
       <div className="container mx-auto px-4">
-        <p>Pastes automatically expire after 3 days.</p>
+        <p>
+          <strong>Pastes automatically expire after 3 days. </strong>
+          <span className="hidden md:inline">Made with ❤️ by Adhish Thite in India.</span>
+        </p>
       </div>
     </footer>
   )
