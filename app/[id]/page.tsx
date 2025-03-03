@@ -7,7 +7,8 @@ import { Card } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
 import { toast } from 'sonner'
 import { Share2, Copy } from 'lucide-react'
-import { ThemeToggle } from '@/components/ThemeToggle'
+import Header from '@/components/Header'
+import Footer from '@/components/Footer'
 import EnhancedMarkdown from '@/components/EnhancedMarkdown'
 
 export default function PastePage() {
@@ -70,15 +71,7 @@ export default function PastePage() {
   if (error) {
     return (
       <main className="flex min-h-screen flex-col">
-        <header className="border-b border-border bg-background/50 py-4 backdrop-blur-sm">
-          <div className="container mx-auto flex items-center justify-between px-4">
-            <h1 className="text-2xl font-bold">PasteDown</h1>
-            <div className="flex items-center gap-4">
-              <p className="text-sm text-muted-foreground">Markdown Paste Service</p>
-              <ThemeToggle />
-            </div>
-          </div>
-        </header>
+        <Header />
 
         <div className="flex flex-1 items-center justify-center p-4">
           <Card className="w-full max-w-2xl p-8 text-center">
@@ -90,26 +83,14 @@ export default function PastePage() {
           </Card>
         </div>
 
-        <footer className="border-t border-border py-4 text-center text-sm text-muted-foreground">
-          <div className="container mx-auto px-4">
-            <p>Pastes automatically expire after 3 days.</p>
-          </div>
-        </footer>
+        <Footer />
       </main>
     )
   }
 
   return (
     <main className="flex min-h-screen flex-col">
-      <header className="border-b border-border bg-background/50 py-4 backdrop-blur-sm">
-        <div className="container mx-auto flex items-center justify-between px-4">
-          <h1 className="text-2xl font-bold">PasteDown</h1>
-          <div className="flex items-center gap-4">
-            <p className="text-sm text-muted-foreground">Markdown Paste Service</p>
-            <ThemeToggle />
-          </div>
-        </div>
-      </header>
+      <Header />
 
       <div className="container mx-auto flex-1 px-4 py-8">
         <div className="mb-4 flex flex-wrap items-center justify-between gap-4">
@@ -150,11 +131,7 @@ export default function PastePage() {
         </div>
       </div>
 
-      <footer className="border-t border-border py-4 text-center text-sm text-muted-foreground">
-        <div className="container mx-auto px-4">
-          <p>Pastes automatically expire after 3 days.</p>
-        </div>
-      </footer>
+      <Footer />
     </main>
   )
 }

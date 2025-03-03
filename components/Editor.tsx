@@ -65,9 +65,9 @@ export default function Editor({ onSubmit, isSubmitting }: EditorProps) {
   // Desktop view (side by side)
   if (!isMobile) {
     return (
-      <div className="flex h-full flex-col">
-        <div className="container mx-auto flex h-full flex-col px-4 py-4">
-          <Card className="flex flex-1 flex-col overflow-hidden border shadow-md">
+      <div className="h-full py-4">
+        <div className="container mx-auto h-full px-4">
+          <Card className="flex h-[calc(100vh-160px)] flex-col overflow-hidden border shadow-md">
             <div className="flex items-center justify-between border-b bg-muted/30 px-4 py-3">
               <h2 className="text-lg font-medium">PasteDown Editor</h2>
               <Button onClick={handleSubmit} disabled={isSubmitting || !content.trim()}>
@@ -119,9 +119,9 @@ export default function Editor({ onSubmit, isSubmitting }: EditorProps) {
 
   // Mobile view (tabs)
   return (
-    <div className="flex h-full flex-col">
-      <div className="container mx-auto flex h-full flex-col px-4 py-4">
-        <Card className="flex flex-1 flex-col overflow-hidden border shadow-md">
+    <div className="h-full py-4">
+      <div className="container mx-auto h-full px-4">
+        <Card className="flex h-[calc(100vh-160px)] flex-col overflow-hidden border shadow-md">
           <div className="flex items-center justify-between border-b bg-muted/30 px-4 py-3">
             <h2 className="text-lg font-medium">PasteDown Editor</h2>
             <Button onClick={handleSubmit} disabled={isSubmitting || !content.trim()} size="sm">

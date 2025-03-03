@@ -4,7 +4,8 @@ import { useState } from 'react'
 import Editor from '@/components/Editor'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
-import { ThemeToggle } from '@/components/ThemeToggle'
+import Header from '@/components/Header'
+import Footer from '@/components/Footer'
 
 export default function Home() {
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -38,26 +39,14 @@ export default function Home() {
   }
 
   return (
-    <main className="flex h-screen flex-col overflow-hidden">
-      <header className="border-b border-border bg-background/95 py-3 backdrop-blur-sm">
-        <div className="container mx-auto flex items-center justify-between px-4">
-          <h1 className="text-2xl font-bold">PasteDown</h1>
-          <div className="flex items-center gap-4">
-            <p className="text-sm text-muted-foreground">Markdown Paste Service</p>
-            <ThemeToggle />
-          </div>
-        </div>
-      </header>
+    <main className="flex min-h-screen flex-col">
+      <Header />
 
-      <div className="flex-1 overflow-hidden">
+      <div className="flex-1">
         <Editor onSubmit={handleSubmit} isSubmitting={isSubmitting} />
       </div>
 
-      <footer className="border-t border-border bg-background/95 py-3 text-center text-sm text-muted-foreground backdrop-blur-sm">
-        <div className="container mx-auto px-4">
-          <p>Pastes automatically expire after 3 days.</p>
-        </div>
-      </footer>
+      <Footer sticky />
     </main>
   )
 }
