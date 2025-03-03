@@ -42,7 +42,6 @@ export default function Header() {
           transition={{ delay: 0.2, duration: 0.4 }}
           className="flex items-center gap-4"
         >
-          <p className="text-base text-muted-foreground">Markdown Paste Service</p>
           <ThemeToggle />
         </motion.div>
       </div>
