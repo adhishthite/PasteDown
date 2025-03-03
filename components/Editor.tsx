@@ -1,13 +1,13 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import ReactMarkdown from 'react-markdown'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Textarea } from '@/components/ui/textarea'
 import { toast } from 'sonner'
 import { useIsMobile } from '@/hooks/use-mobile'
+import EnhancedMarkdown from './EnhancedMarkdown'
 
 interface EditorProps {
   onSubmit: (content: string) => Promise<void>
@@ -102,7 +102,7 @@ export default function Editor({ onSubmit, isSubmitting }: EditorProps) {
                   className="prose prose-sm dark:prose-invert scrollbar-custom max-w-none flex-1 overflow-auto p-6"
                 >
                   {content ? (
-                    <ReactMarkdown>{content}</ReactMarkdown>
+                    <EnhancedMarkdown content={content} />
                   ) : (
                     <p className="italic text-muted-foreground">
                       Your markdown preview will appear here...
@@ -155,7 +155,7 @@ export default function Editor({ onSubmit, isSubmitting }: EditorProps) {
             >
               <div className="prose prose-sm dark:prose-invert scrollbar-custom absolute inset-0 max-w-none overflow-auto p-6">
                 {content ? (
-                  <ReactMarkdown>{content}</ReactMarkdown>
+                  <EnhancedMarkdown content={content} />
                 ) : (
                   <p className="italic text-muted-foreground">
                     Your markdown preview will appear here...

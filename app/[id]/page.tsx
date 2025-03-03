@@ -2,13 +2,13 @@
 
 import { useEffect, useState } from 'react'
 import { useParams } from 'next/navigation'
-import ReactMarkdown from 'react-markdown'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
 import { toast } from 'sonner'
 import { Share2, Copy } from 'lucide-react'
 import { ThemeToggle } from '@/components/ThemeToggle'
+import EnhancedMarkdown from '@/components/EnhancedMarkdown'
 
 export default function PastePage() {
   const { id } = useParams()
@@ -138,7 +138,7 @@ export default function PastePage() {
             </div>
           ) : (
             <div className="prose prose-sm dark:prose-invert md:prose max-w-none p-6">
-              <ReactMarkdown>{paste?.content || ''}</ReactMarkdown>
+              <EnhancedMarkdown content={paste?.content || ''} />
             </div>
           )}
         </Card>
