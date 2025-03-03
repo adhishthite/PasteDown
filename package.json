@@ -64,6 +64,7 @@
     "rehype-stringify": "^10.0.1",
     "remark-math": "^6.0.0",
     "remark-mermaid-plugin": "^1.0.2",
+    "remark-smartypants": "^3.0.2",
     "sonner": "^1.7.2",
     "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7",
