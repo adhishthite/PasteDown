@@ -6,13 +6,18 @@ import remarkMermaidPlugin from 'remark-mermaid-plugin'
 import remarkMath from 'remark-math'
 import rehypeKatex from 'rehype-katex'
 import 'katex/dist/katex.min.css'
-import remarkSmartypants from 'remark-smartypants'
+import remarkTextr from 'remark-textr'
+import { advancedSmartypants } from '@/lib/smartypants'
 
 interface EnhancedMarkdownProps {
   content: string
   className?: string
 }
 
+/**
+ * EnhancedMarkdown component that renders markdown with advanced features
+ * including SmartyPants typography for smart quotes, dashes, and other typographic elements
+ */
 const EnhancedMarkdown: React.FC<EnhancedMarkdownProps> = ({ content, className = '' }) => {
   return (
     <div className={className}>
@@ -22,14 +27,7 @@ const EnhancedMarkdown: React.FC<EnhancedMarkdownProps> = ({ content, className 
           [remarkMermaidPlugin, { theme: 'default' }], // You can change the theme to 'dark', 'forest', etc.
           remarkMath, // Add math support
           // Add SmartyPants support for typographic punctuation
-          [
-            remarkSmartypants,
-            {
-              quotes: true, // Enable smart quotes: '' → '', "" → ""
-              dashes: true, // Enable smart dashes: -- → –, --- → —
-              ellipses: true, // Enable smart ellipses: ... → …
-            },
-          ],
+          [remarkTextr, { plugins: [advancedSmartypants] }],
         ]}
         rehypePlugins={[
           rehypeRaw,
