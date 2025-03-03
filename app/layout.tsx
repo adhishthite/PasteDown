@@ -18,6 +18,9 @@ const geistMono = localFont({
 export const metadata: Metadata = {
   title: 'PasteDown - Markdown Paste Service',
   description: 'A simple service to create and share Markdown content via a unique URL',
+  icons: {
+    icon: '/icon.png',
+  },
 }
 
 export default function RootLayout({
