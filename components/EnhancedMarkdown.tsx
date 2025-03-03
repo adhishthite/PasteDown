@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 import ReactMarkdown from 'react-markdown'
 import rehypeRaw from 'rehype-raw'
@@ -8,6 +10,7 @@ import rehypeKatex from 'rehype-katex'
 import 'katex/dist/katex.min.css'
 import remarkTextr from 'remark-textr'
 import { advancedSmartypants } from '@/lib/smartypants'
+import { motion } from 'framer-motion'
 
 interface EnhancedMarkdownProps {
   content: string
@@ -20,7 +23,12 @@ interface EnhancedMarkdownProps {
  */
 const EnhancedMarkdown: React.FC<EnhancedMarkdownProps> = ({ content, className = '' }) => {
   return (
-    <div className={className}>
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.3 }}
+      className={className}
+    >
       <ReactMarkdown
         remarkPlugins={[
           // @ts-expect-error - Type issues with remark plugins
@@ -34,10 +42,39 @@ const EnhancedMarkdown: React.FC<EnhancedMarkdownProps> = ({ content, className 
           rehypeStringify,
           rehypeKatex, // Add KaTeX rendering
         ]}
+        components={{
+          // Add animations to headings
+          h1: ({ ...props }) => (
+            <motion.h1 
+              initial={{ x: -20, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ duration: 0.4 }}
+              {...props}
+            />
+          ),
+          h2: ({ ...props }) => (
+            <motion.h2 
+              initial={{ x: -15, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ duration: 0.4, delay: 0.1 }}
+              {...props}
+            />
+          ),
+          // Add animations to code blocks
+          code: ({ ...props }) => (
+            <motion.code 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3, delay: 0.2 }}
+              className="font-mono"
+              {...props}
+            />
+          ),
+        }}
       >
         {content}
       </ReactMarkdown>
-    </div>
+    </motion.div>
   )
 }
 

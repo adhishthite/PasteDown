@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-// Import the pastes map and Paste interface from the parent route
+// Import the pastes map from the parent route
 // In a real implementation, this would be a database query
-import { pastes, Paste } from '../shared'
+import { pastes } from '../shared'
 
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
   try {

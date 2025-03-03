@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import { motion } from 'framer-motion'
 
 export default function Home() {
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -39,14 +40,24 @@ export default function Home() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col">
+    <motion.main 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      className="flex min-h-screen flex-col"
+    >
       <Header />
 
-      <div className="flex-1">
+      <motion.div 
+        className="flex-1"
+        initial={{ y: 20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+      >
         <Editor onSubmit={handleSubmit} isSubmitting={isSubmitting} />
-      </div>
+      </motion.div>
 
       <Footer sticky />
-    </main>
+    </motion.main>
   )
 }
