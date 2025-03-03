@@ -67,30 +67,24 @@ export default function Editor({ onSubmit, isSubmitting }: EditorProps) {
   if (!isMobile) {
     return (
       <div className="h-full py-4">
-        <div className="container mx-auto h-full px-4">
+        <div className="3xl:max-w-[2200px] container mx-auto h-full px-4 2xl:max-w-[1800px]">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, type: "spring", stiffness: 100 }}
+            transition={{ duration: 0.5, type: 'spring', stiffness: 100 }}
           >
             <Card className="flex h-[calc(100vh-160px)] flex-col overflow-hidden border shadow-md">
               <div className="flex items-center justify-between border-b bg-muted/30 px-4 py-3">
-                <motion.h2 
+                <motion.h2
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.2, duration: 0.4 }}
-                  className="text-lg font-medium"
+                  className="text-xl font-medium"
                 >
                   PasteDown Editor
                 </motion.h2>
-                <motion.div
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.97 }}
-                >
-                  <Button 
-                    onClick={handleSubmit} 
-                    disabled={isSubmitting || !content.trim()}
-                  >
+                <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
+                  <Button onClick={handleSubmit} disabled={isSubmitting || !content.trim()}>
                     {isSubmitting ? (
                       <motion.span
                         initial={{ opacity: 0 }}
@@ -114,20 +108,20 @@ export default function Editor({ onSubmit, isSubmitting }: EditorProps) {
 
               <div className="grid flex-1 grid-cols-1 overflow-hidden md:grid-cols-2 md:divide-x">
                 {/* Editor Panel */}
-                <motion.div 
+                <motion.div
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.4, delay: 0.1 }}
                   className="flex h-full flex-col overflow-hidden"
                 >
                   <div className="border-b border-border bg-muted/50 px-4 py-2">
-                    <h3 className="text-sm font-medium">Editor</h3>
+                    <h3 className="text-base font-medium">Editor</h3>
                   </div>
                   <div className="relative flex-1 overflow-hidden">
                     <Textarea
                       ref={editorRef}
                       placeholder="Write your markdown here..."
-                      className="scrollbar-custom absolute inset-0 h-full w-full resize-none p-4 font-mono text-sm focus-visible:ring-0"
+                      className="scrollbar-custom absolute inset-0 h-full w-full resize-none p-4 font-mono text-base focus-visible:ring-0"
                       value={content}
                       onChange={handleContentChange}
                     />
@@ -135,18 +129,18 @@ export default function Editor({ onSubmit, isSubmitting }: EditorProps) {
                 </motion.div>
 
                 {/* Preview Panel */}
-                <motion.div 
+                <motion.div
                   initial={{ opacity: 0, x: 10 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.4, delay: 0.2 }}
                   className="flex h-full flex-col overflow-hidden"
                 >
                   <div className="border-b border-border bg-muted/50 px-4 py-2">
-                    <h3 className="text-sm font-medium">Preview</h3>
+                    <h3 className="text-base font-medium">Preview</h3>
                   </div>
                   <div
                     ref={previewRef}
-                    className="prose prose-sm dark:prose-invert scrollbar-custom max-w-none flex-1 overflow-auto p-6"
+                    className="prose prose-lg dark:prose-invert scrollbar-custom max-w-none flex-1 overflow-auto p-6"
                   >
                     <AnimatePresence mode="wait">
                       {content ? (
@@ -175,31 +169,24 @@ export default function Editor({ onSubmit, isSubmitting }: EditorProps) {
   // Mobile view (tabs)
   return (
     <div className="h-full py-4">
-      <div className="container mx-auto h-full px-4">
+      <div className="3xl:max-w-[2200px] container mx-auto h-full px-4 2xl:max-w-[1800px]">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, type: "spring", stiffness: 100 }}
+          transition={{ duration: 0.5, type: 'spring', stiffness: 100 }}
         >
           <Card className="flex h-[calc(100vh-160px)] flex-col overflow-hidden border shadow-md">
             <div className="flex items-center justify-between border-b bg-muted/30 px-4 py-3">
-              <motion.h2 
+              <motion.h2
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.2, duration: 0.4 }}
-                className="text-lg font-medium"
+                className="text-xl font-medium"
               >
                 PasteDown Editor
               </motion.h2>
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Button 
-                  onClick={handleSubmit} 
-                  disabled={isSubmitting || !content.trim()} 
-                  size="sm"
-                >
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Button onClick={handleSubmit} disabled={isSubmitting || !content.trim()} size="sm">
                   <AnimatePresence mode="wait">
                     {isSubmitting ? (
                       <motion.span
@@ -234,8 +221,8 @@ export default function Editor({ onSubmit, isSubmitting }: EditorProps) {
               <TabsList className="grid w-full grid-cols-2 rounded-none">
                 <TabsTrigger value="edit">
                   <motion.span
-                    animate={{ 
-                      color: activeTab === 'edit' ? 'var(--foreground)' : 'var(--muted-foreground)'
+                    animate={{
+                      color: activeTab === 'edit' ? 'var(--foreground)' : 'var(--muted-foreground)',
                     }}
                   >
                     Edit
@@ -243,8 +230,9 @@ export default function Editor({ onSubmit, isSubmitting }: EditorProps) {
                 </TabsTrigger>
                 <TabsTrigger value="preview">
                   <motion.span
-                    animate={{ 
-                      color: activeTab === 'preview' ? 'var(--foreground)' : 'var(--muted-foreground)'
+                    animate={{
+                      color:
+                        activeTab === 'preview' ? 'var(--foreground)' : 'var(--muted-foreground)',
                     }}
                   >
                     Preview
@@ -264,7 +252,7 @@ export default function Editor({ onSubmit, isSubmitting }: EditorProps) {
                   >
                     <Textarea
                       placeholder="Write your markdown here..."
-                      className="scrollbar-custom absolute inset-0 h-full w-full resize-none p-4 font-mono text-sm focus-visible:ring-0"
+                      className="scrollbar-custom absolute inset-0 h-full w-full resize-none p-4 font-mono text-base focus-visible:ring-0"
                       value={content}
                       onChange={handleContentChange}
                     />
@@ -280,7 +268,7 @@ export default function Editor({ onSubmit, isSubmitting }: EditorProps) {
                     transition={{ duration: 0.3 }}
                     className="relative m-0 flex-1 overflow-hidden border-0 p-0"
                   >
-                    <div className="prose prose-sm dark:prose-invert scrollbar-custom absolute inset-0 max-w-none overflow-auto p-6">
+                    <div className="prose prose-lg dark:prose-invert scrollbar-custom absolute inset-0 max-w-none overflow-auto p-6">
                       <AnimatePresence mode="wait">
                         {content ? (
                           <EnhancedMarkdown content={content} />

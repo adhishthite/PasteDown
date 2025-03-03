@@ -27,7 +27,7 @@ const EnhancedMarkdown: React.FC<EnhancedMarkdownProps> = ({ content, className 
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
-      className={className}
+      className={`text-base ${className}`}
     >
       <ReactMarkdown
         remarkPlugins={[
@@ -52,7 +52,7 @@ const EnhancedMarkdown: React.FC<EnhancedMarkdownProps> = ({ content, className 
                 initial={{ x: -20, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ duration: 0.4 }}
-                className={className}
+                className={`mb-4 mt-6 text-2xl font-bold ${className}`}
                 id={id}
                 style={style}
               >
@@ -68,7 +68,7 @@ const EnhancedMarkdown: React.FC<EnhancedMarkdownProps> = ({ content, className 
                 initial={{ x: -15, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ duration: 0.4, delay: 0.1 }}
-                className={className}
+                className={`mb-3 mt-5 text-xl font-semibold ${className}`}
                 id={id}
                 style={style}
               >
@@ -85,7 +85,7 @@ const EnhancedMarkdown: React.FC<EnhancedMarkdownProps> = ({ content, className 
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.3, delay: 0.2 }}
-                className={`font-mono ${propClassName || ''}`}
+                className={`font-mono text-base ${propClassName || ''}`}
                 id={id}
                 style={style}
               >

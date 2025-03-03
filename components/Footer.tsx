@@ -12,17 +12,17 @@ export default function Footer({ sticky = false }: FooterProps) {
     <motion.footer
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ 
+      transition={{
         duration: 0.4,
         delay: 0.3,
-        ease: "easeOut"
+        ease: 'easeOut',
       }}
       className={cn(
-        'border-t border-border py-4 text-center text-sm text-muted-foreground',
+        'border-t border-border py-4 text-center text-base text-muted-foreground',
         sticky && 'sticky bottom-0 bg-background/95 backdrop-blur-sm'
       )}
     >
-      <div className="container mx-auto px-4">
+      <div className="3xl:max-w-[2200px] container mx-auto px-4 2xl:max-w-[1800px]">
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

@@ -19,30 +19,30 @@ export default function Header() {
     <motion.header
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ 
+      transition={{
         type: 'spring',
         stiffness: 300,
         damping: 20,
-        duration: 0.4 
+        duration: 0.4,
       }}
       className="sticky top-0 z-10 border-b border-border bg-background/95 py-3 backdrop-blur-sm"
     >
-      <div className="container mx-auto flex items-center justify-between px-4">
+      <div className="3xl:max-w-[2200px] container mx-auto flex items-center justify-between px-4 2xl:max-w-[1800px]">
         <motion.h1
           whileHover={{ scale: 1.03 }}
           whileTap={{ scale: 0.97 }}
-          className="cursor-pointer text-2xl font-bold transition-colors hover:text-primary"
+          className="cursor-pointer text-3xl font-bold transition-colors hover:text-primary"
           onClick={handleLogoClick}
         >
           PasteDown
         </motion.h1>
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.2, duration: 0.4 }}
           className="flex items-center gap-4"
         >
-          <p className="text-sm text-muted-foreground">Markdown Paste Service</p>
+          <p className="text-base text-muted-foreground">Markdown Paste Service</p>
           <ThemeToggle />
         </motion.div>
       </div>

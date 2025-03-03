@@ -129,6 +129,24 @@
     @apply border-border;
   }
   body {
-    @apply paper-texture bg-background text-foreground;
+    @apply paper-texture bg-background text-base text-foreground;
+    font-size: 16px;
+  }
+
+  /* Increase base font sizes */
+  html {
+    font-size: 17px;
+  }
+
+  @media (min-width: 1536px) {
+    html {
+      font-size: 18px;
+    }
+  }
+
+  @media (min-width: 1800px) {
+    html {
+      font-size: 19px;
+    }
   }
 }

@@ -40,15 +40,15 @@ export default function Home() {
   }
 
   return (
-    <motion.main 
+    <motion.main
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className="flex min-h-screen flex-col"
+      className="flex min-h-screen flex-col text-base"
     >
       <Header />
 
-      <motion.div 
+      <motion.div
         className="flex-1"
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
