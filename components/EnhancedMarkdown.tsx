@@ -23,7 +23,7 @@ interface EnhancedMarkdownProps {
  */
 const EnhancedMarkdown: React.FC<EnhancedMarkdownProps> = ({ content, className = '' }) => {
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
@@ -44,32 +44,55 @@ const EnhancedMarkdown: React.FC<EnhancedMarkdownProps> = ({ content, className 
         ]}
         components={{
           // Add animations to headings
-          h1: ({ ...props }) => (
-            <motion.h1 
-              initial={{ x: -20, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ duration: 0.4 }}
-              {...props}
-            />
-          ),
-          h2: ({ ...props }) => (
-            <motion.h2 
-              initial={{ x: -15, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ duration: 0.4, delay: 0.1 }}
-              {...props}
-            />
-          ),
+          h1: (props) => {
+            // Extract safe props that we know are compatible
+            const { children, className, id, style } = props
+            return (
+              <motion.h1
+                initial={{ x: -20, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ duration: 0.4 }}
+                className={className}
+                id={id}
+                style={style}
+              >
+                {children}
+              </motion.h1>
+            )
+          },
+          h2: (props) => {
+            // Extract safe props that we know are compatible
+            const { children, className, id, style } = props
+            return (
+              <motion.h2
+                initial={{ x: -15, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ duration: 0.4, delay: 0.1 }}
+                className={className}
+                id={id}
+                style={style}
+              >
+                {children}
+              </motion.h2>
+            )
+          },
           // Add animations to code blocks
-          code: ({ ...props }) => (
-            <motion.code 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.3, delay: 0.2 }}
-              className="font-mono"
-              {...props}
-            />
-          ),
+          code: (props) => {
+            // Extract safe props that we know are compatible
+            const { children, className: propClassName, id, style } = props
+            return (
+              <motion.code
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.3, delay: 0.2 }}
+                className={`font-mono ${propClassName || ''}`}
+                id={id}
+                style={style}
+              >
+                {children}
+              </motion.code>
+            )
+          },
         }}
       >
         {content}
