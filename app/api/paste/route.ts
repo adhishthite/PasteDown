@@ -3,6 +3,8 @@ import { nanoid } from 'nanoid'
 import { checkRateLimit } from './shared'
 import connectToDatabase from '@/backend/utils/dbConnect'
 import PasteModel from '@/backend/models/Paste'
+import analyticsService, { AnalyticsEventType } from '@/backend/services/AnalyticsService'
+import logger from '@/backend/utils/logger'
 
 export async function POST(request: NextRequest) {
   try {
@@ -14,6 +16,7 @@ export async function POST(request: NextRequest) {
 
     // Check rate limit (5 requests per hour per IP)
     if (!checkRateLimit(ip)) {
+      logger.warn('Rate limit exceeded', { ip })
       return NextResponse.json({ error: 'Rate limit exceeded. Try again later.' }, { status: 429 })
     }
 
@@ -22,6 +25,7 @@ export async function POST(request: NextRequest) {
 
     // Validate content
     if (!body.content || typeof body.content !== 'string') {
+      logger.warn('Invalid content submitted', { ip })
       return NextResponse.json(
         { error: 'Invalid content. Content must be a non-empty string.' },
         { status: 400 }
@@ -44,6 +48,15 @@ export async function POST(request: NextRequest) {
     })
 
     await paste.save()
+    
+    // Track paste creation in analytics
+    await analyticsService.trackEvent(AnalyticsEventType.PASTE_CREATED, {
+      ip,
+      pasteId: id,
+      contentLength: body.content.length,
+    })
+
+    logger.info('Paste created successfully', { id, ip })
 
     // Return the paste ID and URL
     return NextResponse.json(
@@ -55,7 +68,7 @@ export async function POST(request: NextRequest) {
       { status: 201 }
     )
   } catch (error) {
-    console.error('Error creating paste:', error)
+    logger.error('Error creating paste', error)
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }
 }

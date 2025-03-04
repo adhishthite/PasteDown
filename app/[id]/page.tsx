@@ -5,11 +5,11 @@ import { useParams } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
-import { toast } from 'sonner'
-import { Share2, Copy, Plus } from 'lucide-react'
+import { Plus } from 'lucide-react'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import EnhancedMarkdown from '@/components/EnhancedMarkdown'
+import PasteActions from '@/components/PasteActions'
 
 export default function PastePage() {
   const { id } = useParams()
@@ -46,28 +46,6 @@ export default function PastePage() {
     }
   }, [id])
 
-  const copyToClipboard = async () => {
-    try {
-      await navigator.clipboard.writeText(window.location.href)
-      toast.success('Link copied to clipboard')
-    } catch (error) {
-      console.error('Error copying link:', error)
-      toast.error('Failed to copy link')
-    }
-  }
-
-  const copyContent = async () => {
-    if (!paste) return
-
-    try {
-      await navigator.clipboard.writeText(paste.content)
-      toast.success('Content copied to clipboard')
-    } catch (error) {
-      console.error('Error copying content:', error)
-      toast.error('Failed to copy content')
-    }
-  }
-
   if (error) {
     return (
       <main className="flex min-h-screen flex-col">
@@ -95,20 +73,13 @@ export default function PastePage() {
       <div className="container mx-auto flex-1 px-4 py-8">
         <div className="mb-4 flex flex-wrap items-center justify-between gap-4">
           <h2 className="text-xl font-semibold">
-            Paste: <span className="font-mono text-primary">{id}</span>
+            Paste: <span className="font-mono text-primary">{id as string}</span>
           </h2>
           <div className="flex flex-wrap gap-2">
-            <Button variant="outline" size="sm" onClick={copyToClipboard}>
-              <Share2 className="h-4 w-4" />
-              <span className="ml-2 hidden sm:inline">Share</span>
-            </Button>
-            <Button variant="outline" size="sm" onClick={copyContent}>
-              <Copy className="h-4 w-4" />
-              <span className="ml-2 hidden sm:inline">Copy Content</span>
-            </Button>
+            {paste && <PasteActions pasteId={id as string} content={paste.content} />}
             <Button size="sm" onClick={() => (window.location.href = '/')}>
-              <Plus className="h-4 w-4" />
-              <span className="ml-2 hidden sm:inline">Create New Paste</span>
+              <Plus className="h-4 w-4 mr-2" />
+              <span className="hidden sm:inline">New Paste</span>
             </Button>
           </div>
         </div>
