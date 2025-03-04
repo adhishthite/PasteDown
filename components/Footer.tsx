@@ -2,7 +2,7 @@
 
 import { cn } from '@/lib/utils'
 import { motion } from 'framer-motion'
-
+import Link from 'next/link'
 interface FooterProps {
   sticky?: boolean
 }
@@ -24,45 +24,53 @@ export default function Footer({ sticky = false }: FooterProps) {
     >
       <div className="3xl:max-w-[2200px] container mx-auto px-4 2xl:max-w-[1800px]">
         {/* Desktop View */}
-        <div className="hidden md:grid md:grid-cols-3 items-center">
+        <div className="hidden items-center md:grid md:grid-cols-3">
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5, duration: 0.4 }}
-            className="text-foreground text-left font-semibold"
+            className="text-left font-semibold text-foreground"
           >
             Pastes automatically expire after 3 days.
           </motion.p>
-          
+
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5, duration: 0.4 }}
-            className="text-muted-foreground text-sm font-light text-center"
+            className="text-center text-sm font-light text-muted-foreground"
           >
-            © {new Date().getFullYear()} Adhish Thite
+            © {new Date().getFullYear()}{' '}
+            <Link
+              href="https://adhishthite.vercel.app"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:underline"
+            >
+              Adhish Thite
+            </Link>
           </motion.p>
-          
+
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5, duration: 0.4 }}
-            className="text-foreground text-right"
+            className="text-right text-foreground"
           >
             Made with ❤️ in India
           </motion.p>
         </div>
-        
+
         {/* Mobile View - Compressed */}
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.4 }}
-          className="md:hidden text-xs text-center"
+          className="text-center text-xs md:hidden"
         >
-          <span className="text-foreground font-semibold">Pastes expire in 3 days</span>
+          <span className="font-semibold text-foreground">Pastes expire in 3 days</span>
           <span className="mx-1.5">•</span>
-          <span className="text-muted-foreground font-light">© {new Date().getFullYear()}</span>
+          <span className="font-light text-muted-foreground">© {new Date().getFullYear()}</span>
           <span className="mx-1.5">•</span>
           <span className="text-foreground">Made with ❤️ in India</span>
         </motion.p>
