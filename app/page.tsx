@@ -1,63 +1,62 @@
 'use client'
 
-import { useState } from 'react'
-import Editor from '@/components/Editor'
+import { useState, useCallback } from 'react'
+import dynamic from 'next/dynamic'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
-import { motion } from 'framer-motion'
+
+// Dynamically import the Editor component to reduce initial bundle size
+const Editor = dynamic(() => import('@/components/Editor'), {
+  loading: () => <div className="flex flex-1 items-center justify-center">Loading editor...</div>,
+  ssr: false, // Disable server-side rendering for the Editor
+})
 
 export default function Home() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const router = useRouter()
 
-  const handleSubmit = async (content: string) => {
-    setIsSubmitting(true)
-    try {
-      const response = await fetch('/api/paste', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ content }),
-      })
+  // Memoize the submit handler to prevent unnecessary re-renders
+  const handleSubmit = useCallback(
+    async (content: string) => {
+      setIsSubmitting(true)
+      try {
+        const response = await fetch('/api/paste', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ content }),
+        })
 
-      if (!response.ok) {
-        throw new Error('Failed to create paste')
+        if (!response.ok) {
+          throw new Error('Failed to create paste')
+        }
+
+        const { id } = await response.json()
+
+        toast.success('Paste created successfully!')
+        router.push(`/${id}`)
+      } catch (error) {
+        console.error('Error creating paste:', error)
+        toast.error('Failed to create paste. Please try again.')
+      } finally {
+        setIsSubmitting(false)
       }
-
-      const { id } = await response.json()
-
-      toast.success('Paste created successfully!')
-      router.push(`/${id}`)
-    } catch (error) {
-      console.error('Error creating paste:', error)
-      toast.error('Failed to create paste. Please try again.')
-    } finally {
-      setIsSubmitting(false)
-    }
-  }
+    },
+    [router]
+  )
 
   return (
-    <motion.main
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-      className="flex min-h-screen flex-col text-base"
-    >
+    <main className="flex min-h-screen flex-col text-base">
       <Header />
 
-      <motion.div
-        className="flex-1"
-        initial={{ y: 20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.5, delay: 0.2 }}
-      >
+      <div className="flex-1">
         <Editor onSubmit={handleSubmit} isSubmitting={isSubmitting} />
-      </motion.div>
+      </div>
 
       <Footer sticky />
-    </motion.main>
+    </main>
   )
 }
