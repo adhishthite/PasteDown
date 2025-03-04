@@ -19,7 +19,7 @@ export default function Footer({ sticky = false }: FooterProps) {
       }}
       className={cn(
         'border-t border-border py-4 text-center text-base text-muted-foreground',
-        sticky && 'sticky bottom-0 bg-background/95 backdrop-blur-sm'
+        sticky && 'sticky bottom-0 z-10 bg-background/95 backdrop-blur-sm'
       )}
     >
       <div className="3xl:max-w-[2200px] container mx-auto px-4 2xl:max-w-[1800px]">

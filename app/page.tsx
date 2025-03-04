@@ -76,10 +76,10 @@ export default function Home() {
   )
 
   return (
-    <main className="flex min-h-screen flex-col text-base">
+    <main className="flex h-screen flex-col overflow-hidden text-base">
       <Header />
 
-      <div className="flex-1">
+      <div className="flex-1 overflow-hidden">
         <Editor onSubmit={handleSubmit} isSubmitting={isSubmitting} />
       </div>
 

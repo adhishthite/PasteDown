@@ -66,14 +66,15 @@ function EditorComponent({ onSubmit, isSubmitting }: EditorProps) {
   // Desktop view (side by side)
   if (!isMobile) {
     return (
-      <div className="h-full py-4">
+      <div className="h-full">
         <div className="3xl:max-w-[2200px] container mx-auto h-full px-4 2xl:max-w-[1800px]">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, type: 'spring', stiffness: 100 }}
+            className="h-full py-4"
           >
-            <Card className="flex h-[calc(100vh-160px)] flex-col overflow-hidden border shadow-md">
+            <Card className="flex h-full flex-col overflow-hidden border shadow-md">
               <div className="flex items-center justify-between border-b bg-muted/30 px-4 py-3">
                 <h2 className="text-xl font-medium">PasteDown Editor</h2>
                 <Button onClick={handleSubmit} disabled={isSubmitting || !content.trim()}>
@@ -126,14 +127,15 @@ function EditorComponent({ onSubmit, isSubmitting }: EditorProps) {
 
   // Mobile view (tabs)
   return (
-    <div className="h-full py-4">
+    <div className="h-full">
       <div className="3xl:max-w-[2200px] container mx-auto h-full px-4 2xl:max-w-[1800px]">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
+          className="h-full py-4"
         >
-          <Card className="flex h-[calc(100vh-160px)] flex-col overflow-hidden border shadow-md">
+          <Card className="flex h-full flex-col overflow-hidden border shadow-md">
             <div className="flex items-center justify-between border-b bg-muted/30 px-4 py-3">
               <h2 className="text-xl font-medium">PasteDown Editor</h2>
               <Button onClick={handleSubmit} disabled={isSubmitting || !content.trim()} size="sm">
