@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Copy, Share2 } from 'lucide-react'
-import { toast } from '@/hooks/use-toast'
+import { toast } from 'sonner'
 
 interface PasteActionsProps {
   pasteId: string
@@ -33,17 +33,12 @@ export default function PasteActions({ pasteId, content }: PasteActionsProps) {
     try {
       setIsCopying(true)
       await navigator.clipboard.writeText(content)
+      toast.success('Copied to clipboard')
+      // Track event after successful copy
       await trackEvent('copy')
-      toast({
-        title: 'Copied to clipboard',
-        description: 'The paste content has been copied to your clipboard.',
-      })
-    } catch {
-      toast({
-        title: 'Copy failed',
-        description: 'Failed to copy to clipboard. Please try again.',
-        variant: 'destructive',
-      })
+    } catch (error) {
+      console.error('Copy failed:', error)
+      toast.error('Failed to copy to clipboard')
     } finally {
       setIsCopying(false)
     }
@@ -52,36 +47,13 @@ export default function PasteActions({ pasteId, content }: PasteActionsProps) {
   const handleShare = async () => {
     try {
       setIsSharing(true)
-      
-      if (navigator.share) {
-        await navigator.share({
-          title: 'PasteDown Shared Content',
-          text: 'Check out this paste on PasteDown',
-          url: window.location.href,
-        })
-        await trackEvent('share')
-        toast({
-          title: 'Shared successfully',
-          description: 'The paste link has been shared.',
-        })
-      } else {
-        // Fallback for browsers that don't support navigator.share
-        await navigator.clipboard.writeText(window.location.href)
-        await trackEvent('share')
-        toast({
-          title: 'Link copied',
-          description: 'The paste link has been copied to your clipboard. You can now share it manually.',
-        })
-      }
+      const url = window.location.href
+      await navigator.clipboard.writeText(url)
+      toast.success('Link copied')
+      await trackEvent('share')
     } catch (error) {
-      // Only show error toast if it's not an AbortError (user cancelled share)
-      if (error instanceof Error && error.name !== 'AbortError') {
-        toast({
-          title: 'Share failed',
-          description: 'Failed to share the paste. Please try again.',
-          variant: 'destructive',
-        })
-      }
+      console.error('Share failed:', error)
+      toast.error('Failed to copy link')
     } finally {
       setIsSharing(false)
     }
@@ -89,23 +61,25 @@ export default function PasteActions({ pasteId, content }: PasteActionsProps) {
 
   return (
     <div className="flex space-x-2">
-      <Button 
-        variant="outline" 
-        size="sm" 
+      <Button
+        variant="outline"
+        size="sm"
         onClick={handleCopy}
         disabled={isCopying}
+        className="sm:space-x-2"
       >
-        <Copy className="h-4 w-4 mr-2" />
-        {isCopying ? 'Copying...' : 'Copy'}
+        <Copy className="h-4 w-4" />
+        <span className="hidden sm:inline">{isCopying ? 'Copying...' : 'Copy'}</span>
       </Button>
-      <Button 
-        variant="outline" 
-        size="sm" 
+      <Button
+        variant="outline"
+        size="sm"
         onClick={handleShare}
         disabled={isSharing}
+        className="sm:space-x-2"
       >
-        <Share2 className="h-4 w-4 mr-2" />
-        {isSharing ? 'Sharing...' : 'Share'}
+        <Share2 className="h-4 w-4" />
+        <span className="hidden sm:inline">{isSharing ? 'Sharing...' : 'Share'}</span>
       </Button>
     </div>
   )
