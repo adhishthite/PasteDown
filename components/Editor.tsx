@@ -95,6 +95,7 @@ function EditorComponent({ onSubmit, isSubmitting }: EditorProps) {
                       className="scrollbar-custom absolute inset-0 h-full w-full resize-none p-4 font-mono text-base focus-visible:ring-0"
                       value={content}
                       onChange={handleContentChange}
+                      onWheel={(e) => e.stopPropagation()}
                     />
                   </div>
                 </div>
@@ -107,6 +108,7 @@ function EditorComponent({ onSubmit, isSubmitting }: EditorProps) {
                   <div
                     ref={previewRef}
                     className="prose prose-lg dark:prose-invert scrollbar-custom max-w-none flex-1 overflow-auto p-6"
+                    onWheel={(e) => e.stopPropagation()}
                   >
                     {content ? (
                       <EnhancedMarkdown content={content} />
@@ -161,13 +163,17 @@ function EditorComponent({ onSubmit, isSubmitting }: EditorProps) {
                     className="scrollbar-custom absolute inset-0 h-full w-full resize-none p-4 font-mono text-base focus-visible:ring-0"
                     value={content}
                     onChange={handleContentChange}
+                    onWheel={(e) => e.stopPropagation()}
                   />
                 </div>
               )}
 
               {activeTab === 'preview' && (
                 <div className="relative m-0 flex-1 overflow-hidden border-0 p-0">
-                  <div className="prose prose-lg dark:prose-invert scrollbar-custom absolute inset-0 max-w-none overflow-auto p-6">
+                  <div 
+                    className="prose prose-lg dark:prose-invert scrollbar-custom absolute inset-0 max-w-none overflow-auto p-6" 
+                    onWheel={(e) => e.stopPropagation()}
+                  >
                     {content ? (
                       <EnhancedMarkdown content={content} />
                     ) : (
