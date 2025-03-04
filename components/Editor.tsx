@@ -63,6 +63,30 @@ function EditorComponent({ onSubmit, isSubmitting }: EditorProps) {
     }
   }, [isMobile])
 
+  // Loading spinner component
+  const LoadingSpinner = () => (
+    <svg
+      className="-ml-1 mr-2 h-4 w-4 animate-spin text-background"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <circle
+        className="opacity-25"
+        cx="12"
+        cy="12"
+        r="10"
+        stroke="currentColor"
+        strokeWidth="4"
+      ></circle>
+      <path
+        className="opacity-75"
+        fill="currentColor"
+        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+      ></path>
+    </svg>
+  )
+
   // Desktop view (side by side)
   if (!isMobile) {
     return (
@@ -78,7 +102,14 @@ function EditorComponent({ onSubmit, isSubmitting }: EditorProps) {
               <div className="flex items-center justify-between border-b bg-muted/30 px-4 py-3">
                 <h2 className="text-xl font-medium">PasteDown Editor</h2>
                 <Button onClick={handleSubmit} disabled={isSubmitting || !content.trim()}>
-                  {isSubmitting ? 'Creating...' : 'Create Paste'}
+                  {isSubmitting ? (
+                    <>
+                      <LoadingSpinner />
+                      Creating...
+                    </>
+                  ) : (
+                    'Create Paste'
+                  )}
                 </Button>
               </div>
 
@@ -95,7 +126,16 @@ function EditorComponent({ onSubmit, isSubmitting }: EditorProps) {
                       className="scrollbar-custom absolute inset-0 h-full w-full resize-none overflow-auto p-4 font-mono text-base focus-visible:ring-0"
                       value={content}
                       onChange={handleContentChange}
+                      disabled={isSubmitting}
                     />
+                    {isSubmitting && (
+                      <div className="absolute inset-0 flex items-center justify-center bg-background/50 backdrop-blur-sm">
+                        <div className="flex items-center gap-2 rounded-md bg-primary px-4 py-2 font-medium text-primary-foreground">
+                          <LoadingSpinner />
+                          Creating paste...
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
 
@@ -116,6 +156,14 @@ function EditorComponent({ onSubmit, isSubmitting }: EditorProps) {
                       </p>
                     )}
                   </div>
+                  {isSubmitting && (
+                    <div className="absolute inset-0 flex items-center justify-center bg-background/50 backdrop-blur-sm">
+                      <div className="flex items-center gap-2 rounded-md bg-primary px-4 py-2 font-medium text-primary-foreground">
+                        <LoadingSpinner />
+                        Creating paste...
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </Card>
@@ -139,7 +187,14 @@ function EditorComponent({ onSubmit, isSubmitting }: EditorProps) {
             <div className="flex items-center justify-between border-b bg-muted/30 px-4 py-3">
               <h2 className="text-xl font-medium">PasteDown Editor</h2>
               <Button onClick={handleSubmit} disabled={isSubmitting || !content.trim()} size="sm">
-                {isSubmitting ? 'Creating...' : 'Create'}
+                {isSubmitting ? (
+                  <>
+                    <LoadingSpinner />
+                    Creating...
+                  </>
+                ) : (
+                  'Create'
+                )}
               </Button>
             </div>
 
@@ -150,8 +205,12 @@ function EditorComponent({ onSubmit, isSubmitting }: EditorProps) {
               className="flex flex-1 flex-col"
             >
               <TabsList className="grid w-full grid-cols-2 rounded-none">
-                <TabsTrigger value="edit">Edit</TabsTrigger>
-                <TabsTrigger value="preview">Preview</TabsTrigger>
+                <TabsTrigger value="edit" disabled={isSubmitting}>
+                  Edit
+                </TabsTrigger>
+                <TabsTrigger value="preview" disabled={isSubmitting}>
+                  Preview
+                </TabsTrigger>
               </TabsList>
 
               {activeTab === 'edit' && (
@@ -161,7 +220,16 @@ function EditorComponent({ onSubmit, isSubmitting }: EditorProps) {
                     className="scrollbar-custom absolute inset-0 h-full w-full resize-none overflow-auto p-4 font-mono text-base focus-visible:ring-0"
                     value={content}
                     onChange={handleContentChange}
+                    disabled={isSubmitting}
                   />
+                  {isSubmitting && (
+                    <div className="absolute inset-0 flex items-center justify-center bg-background/50 backdrop-blur-sm">
+                      <div className="flex items-center gap-2 rounded-md bg-primary px-4 py-2 font-medium text-primary-foreground">
+                        <LoadingSpinner />
+                        Creating paste...
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
 
@@ -176,6 +244,14 @@ function EditorComponent({ onSubmit, isSubmitting }: EditorProps) {
                       </p>
                     )}
                   </div>
+                  {isSubmitting && (
+                    <div className="absolute inset-0 flex items-center justify-center bg-background/50 backdrop-blur-sm">
+                      <div className="flex items-center gap-2 rounded-md bg-primary px-4 py-2 font-medium text-primary-foreground">
+                        <LoadingSpinner />
+                        Creating paste...
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
             </Tabs>
