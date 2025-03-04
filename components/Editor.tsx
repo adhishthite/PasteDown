@@ -66,15 +66,15 @@ function EditorComponent({ onSubmit, isSubmitting }: EditorProps) {
   // Desktop view (side by side)
   if (!isMobile) {
     return (
-      <div className="h-full">
-        <div className="3xl:max-w-[2200px] container mx-auto h-full px-4 2xl:max-w-[1800px]">
+      <div className="h-full w-full">
+        <div className="3xl:max-w-[2200px] container mx-auto h-full w-full px-4 2xl:max-w-[1800px]">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, type: 'spring', stiffness: 100 }}
-            className="h-full py-4"
+            className="h-full w-full py-4"
           >
-            <Card className="flex h-full flex-col overflow-hidden border shadow-md">
+            <Card className="flex h-full w-full flex-col overflow-hidden border shadow-md">
               <div className="flex items-center justify-between border-b bg-muted/30 px-4 py-3">
                 <h2 className="text-xl font-medium">PasteDown Editor</h2>
                 <Button onClick={handleSubmit} disabled={isSubmitting || !content.trim()}>
@@ -92,10 +92,9 @@ function EditorComponent({ onSubmit, isSubmitting }: EditorProps) {
                     <Textarea
                       ref={editorRef}
                       placeholder="Write your markdown here..."
-                      className="scrollbar-custom absolute inset-0 h-full w-full resize-none p-4 font-mono text-base focus-visible:ring-0"
+                      className="scrollbar-custom absolute inset-0 h-full w-full resize-none overflow-auto p-4 font-mono text-base focus-visible:ring-0"
                       value={content}
                       onChange={handleContentChange}
-                      onWheel={(e) => e.stopPropagation()}
                     />
                   </div>
                 </div>
@@ -107,8 +106,7 @@ function EditorComponent({ onSubmit, isSubmitting }: EditorProps) {
                   </div>
                   <div
                     ref={previewRef}
-                    className="prose prose-lg dark:prose-invert scrollbar-custom max-w-none flex-1 overflow-auto p-6"
-                    onWheel={(e) => e.stopPropagation()}
+                    className="prose prose-lg dark:prose-invert scrollbar-custom flex-1 overflow-auto p-6"
                   >
                     {content ? (
                       <EnhancedMarkdown content={content} />
@@ -129,15 +127,15 @@ function EditorComponent({ onSubmit, isSubmitting }: EditorProps) {
 
   // Mobile view (tabs)
   return (
-    <div className="h-full">
-      <div className="3xl:max-w-[2200px] container mx-auto h-full px-4 2xl:max-w-[1800px]">
+    <div className="h-full w-full">
+      <div className="3xl:max-w-[2200px] container mx-auto h-full w-full px-4 2xl:max-w-[1800px]">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
-          className="h-full py-4"
+          className="h-full w-full py-4"
         >
-          <Card className="flex h-full flex-col overflow-hidden border shadow-md">
+          <Card className="flex h-full w-full flex-col overflow-hidden border shadow-md">
             <div className="flex items-center justify-between border-b bg-muted/30 px-4 py-3">
               <h2 className="text-xl font-medium">PasteDown Editor</h2>
               <Button onClick={handleSubmit} disabled={isSubmitting || !content.trim()} size="sm">
@@ -160,20 +158,16 @@ function EditorComponent({ onSubmit, isSubmitting }: EditorProps) {
                 <div className="relative m-0 flex-1 overflow-hidden border-0 p-0">
                   <Textarea
                     placeholder="Write your markdown here..."
-                    className="scrollbar-custom absolute inset-0 h-full w-full resize-none p-4 font-mono text-base focus-visible:ring-0"
+                    className="scrollbar-custom absolute inset-0 h-full w-full resize-none overflow-auto p-4 font-mono text-base focus-visible:ring-0"
                     value={content}
                     onChange={handleContentChange}
-                    onWheel={(e) => e.stopPropagation()}
                   />
                 </div>
               )}
 
               {activeTab === 'preview' && (
                 <div className="relative m-0 flex-1 overflow-hidden border-0 p-0">
-                  <div 
-                    className="prose prose-lg dark:prose-invert scrollbar-custom absolute inset-0 max-w-none overflow-auto p-6" 
-                    onWheel={(e) => e.stopPropagation()}
-                  >
+                  <div className="prose prose-lg dark:prose-invert scrollbar-custom absolute inset-0 max-w-none overflow-auto p-6">
                     {content ? (
                       <EnhancedMarkdown content={content} />
                     ) : (

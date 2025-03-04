@@ -79,8 +79,10 @@ export default function Home() {
     <main className="flex h-screen flex-col text-base">
       <Header />
 
-      <div className="no-scrollbar flex-1 overflow-hidden">
-        <Editor onSubmit={handleSubmit} isSubmitting={isSubmitting} />
+      <div className="relative flex-1 overflow-hidden">
+        <div className="absolute inset-0">
+          <Editor onSubmit={handleSubmit} isSubmitting={isSubmitting} />
+        </div>
       </div>
 
       <Footer sticky />
