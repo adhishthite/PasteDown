@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
 import { toast } from 'sonner'
-import { Share2, Copy } from 'lucide-react'
+import { Share2, Copy, Plus } from 'lucide-react'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import EnhancedMarkdown from '@/components/EnhancedMarkdown'
@@ -100,11 +100,15 @@ export default function PastePage() {
           <div className="flex flex-wrap gap-2">
             <Button variant="outline" size="sm" onClick={copyToClipboard}>
               <Share2 className="mr-2 h-4 w-4" />
-              Share
+              <span className="hidden sm:inline">Share</span>
             </Button>
             <Button variant="outline" size="sm" onClick={copyContent}>
               <Copy className="mr-2 h-4 w-4" />
-              Copy Content
+              <span className="hidden sm:inline">Copy Content</span>
+            </Button>
+            <Button size="sm" onClick={() => (window.location.href = '/')}>
+              <Plus className="mr-2 h-4 w-4" />
+              <span className="hidden sm:inline">Create New Paste</span>
             </Button>
           </div>
         </div>
@@ -123,12 +127,6 @@ export default function PastePage() {
             </div>
           )}
         </Card>
-
-        <div className="mt-6 text-center text-sm text-muted-foreground">
-          <Button variant="link" size="sm" onClick={() => (window.location.href = '/')}>
-            Create New Paste
-          </Button>
-        </div>
       </div>
 
       <Footer />
