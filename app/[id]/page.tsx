@@ -99,16 +99,16 @@ export default function PastePage() {
           </h2>
           <div className="flex flex-wrap gap-2">
             <Button variant="outline" size="sm" onClick={copyToClipboard}>
-              <Share2 className="mr-2 h-4 w-4" />
-              <span className="hidden sm:inline">Share</span>
+              <Share2 className="h-4 w-4" />
+              <span className="ml-2 hidden sm:inline">Share</span>
             </Button>
             <Button variant="outline" size="sm" onClick={copyContent}>
-              <Copy className="mr-2 h-4 w-4" />
-              <span className="hidden sm:inline">Copy Content</span>
+              <Copy className="h-4 w-4" />
+              <span className="ml-2 hidden sm:inline">Copy Content</span>
             </Button>
             <Button size="sm" onClick={() => (window.location.href = '/')}>
-              <Plus className="mr-2 h-4 w-4" />
-              <span className="hidden sm:inline">Create New Paste</span>
+              <Plus className="h-4 w-4" />
+              <span className="ml-2 hidden sm:inline">Create New Paste</span>
             </Button>
           </div>
         </div>
