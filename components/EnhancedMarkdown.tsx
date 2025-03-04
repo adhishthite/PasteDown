@@ -11,6 +11,9 @@ import 'katex/dist/katex.min.css'
 import remarkTextr from 'remark-textr'
 import { advancedSmartypants } from '@/lib/smartypants'
 
+// Import the correct types
+import type { Plugin } from 'unified'
+
 interface EnhancedMarkdownProps {
   content: string
   className?: string
@@ -24,13 +27,18 @@ const EnhancedMarkdownComponent: React.FC<EnhancedMarkdownProps> = ({
   content,
   className = '',
 }) => {
+  // Fix type incompatibility with remarkMermaidPlugin using a more specific type
+  // The double cast is needed to safely convert between incompatible plugin types
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const mermaidPlugin = remarkMermaidPlugin as unknown as Plugin<[], any>
+
   return (
     <div className={`text-base ${className}`}>
       <ReactMarkdown
         remarkPlugins={[
-          [remarkMermaidPlugin, {}],
           remarkMath,
           [remarkTextr, { plugins: [advancedSmartypants] }],
+          [mermaidPlugin, {}],
         ]}
         rehypePlugins={[rehypeRaw, rehypeStringify, rehypeKatex]}
         components={{
