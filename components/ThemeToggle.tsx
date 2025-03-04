@@ -16,13 +16,18 @@ export function ThemeToggle() {
   }, [])
 
   return (
-    <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+    <motion.div 
+      whileHover={{ scale: 1.05 }} 
+      whileTap={{ scale: 0.95 }}
+      className="relative"
+    >
+      <div className="absolute -inset-1 rounded-full bg-primary/20 blur-md opacity-0 transition-opacity group-hover:opacity-100" />
       <Button
-        variant="ghost"
+        variant="outline"
         size="icon"
         onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
         {...(mounted ? { title: `Switch to ${theme === 'dark' ? 'light' : 'dark'} mode` } : {})}
-        className="relative overflow-hidden"
+        className="relative overflow-hidden border border-primary/30 bg-background/80 backdrop-blur-sm group hover:border-primary/50 hover:shadow-sm hover:shadow-primary/20"
       >
         <motion.div
           initial={false}
@@ -36,7 +41,7 @@ export function ThemeToggle() {
           }
           transition={{ duration: 0.5, type: 'spring', stiffness: 200 }}
         >
-          <Sun className="h-[1.2rem] w-[1.2rem]" />
+          <Sun className="h-[1.2rem] w-[1.2rem] text-yellow-500" />
         </motion.div>
 
         <motion.div
@@ -52,7 +57,7 @@ export function ThemeToggle() {
           }
           transition={{ duration: 0.5, type: 'spring', stiffness: 200 }}
         >
-          <Moon className="h-[1.2rem] w-[1.2rem]" />
+          <Moon className="h-[1.2rem] w-[1.2rem] text-blue-400" />
         </motion.div>
 
         <span className="sr-only">Toggle theme</span>
