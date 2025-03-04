@@ -1,28 +1,11 @@
-// Shared types and data for paste API routes
-export interface Paste {
-  id: string
-  content: string
-  createdAt: Date
-  expiresAt: Date
+// Rate limiting types and implementation
+interface RateLimitEntry {
+  count: number
+  resetAt: Date
 }
 
-// In-memory store for pastes (would be replaced with a real database)
-export const pastes = new Map<string, Paste>()
+export const ipRequests = new Map<string, RateLimitEntry>()
 
-// Rate limiting implementation
-export const ipRequests = new Map<string, { count: number; resetAt: Date }>()
-
-// Simulate TTL by cleaning up expired pastes
-export function cleanupExpiredPastes() {
-  const now = new Date()
-  Array.from(pastes.entries()).forEach(([id, paste]) => {
-    if (paste.expiresAt < now) {
-      pastes.delete(id)
-    }
-  })
-}
-
-// Check rate limit
 export function checkRateLimit(ip: string): boolean {
   const now = new Date()
   const rateLimit = ipRequests.get(ip)

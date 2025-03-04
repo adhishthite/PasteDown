@@ -1,11 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { nanoid } from 'nanoid'
-import { Paste, pastes, cleanupExpiredPastes, checkRateLimit } from './shared'
+import { checkRateLimit } from './shared'
+import connectToDatabase from '@/backend/utils/dbConnect'
+import PasteModel from '@/backend/models/Paste'
 
 export async function POST(request: NextRequest) {
   try {
-    // Clean up expired pastes
-    cleanupExpiredPastes()
+    // Connect to database
+    await connectToDatabase()
 
     // Get client IP for rate limiting
     const ip = request.headers.get('x-forwarded-for') || 'unknown'
@@ -33,16 +35,15 @@ export async function POST(request: NextRequest) {
     const now = new Date()
     const expiresAt = new Date(now.getTime() + 3 * 24 * 60 * 60 * 1000)
 
-    // Create the paste object
-    const paste: Paste = {
+    // Create and save the paste to MongoDB
+    const paste = new PasteModel({
       id,
       content: body.content,
       createdAt: now,
       expiresAt,
-    }
+    })
 
-    // Save paste to our "database"
-    pastes.set(id, paste)
+    await paste.save()
 
     // Return the paste ID and URL
     return NextResponse.json(

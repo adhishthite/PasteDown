@@ -1,19 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server'
-
-// Import the pastes map from the parent route
-// In a real implementation, this would be a database query
-import { pastes } from '../shared'
+import connectToDatabase from '@/backend/utils/dbConnect'
+import PasteModel from '@/backend/models/Paste'
 
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
   try {
+    // Connect to database
+    await connectToDatabase()
+
     const id = params.id
 
     if (!id) {
       return NextResponse.json({ error: 'Missing paste ID' }, { status: 400 })
     }
 
-    // Get the paste from our "database"
-    const paste = pastes.get(id)
+    // Get the paste from MongoDB
+    const paste = await PasteModel.findOne({ id })
 
     if (!paste) {
       return NextResponse.json({ error: 'Paste not found or has expired' }, { status: 404 })
@@ -22,8 +23,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
     // Check if paste has expired
     const now = new Date()
     if (paste.expiresAt < now) {
-      // Delete expired paste
-      pastes.delete(id)
+      // MongoDB TTL index will handle deletion
       return NextResponse.json({ error: 'Paste has expired' }, { status: 404 })
     }
 
