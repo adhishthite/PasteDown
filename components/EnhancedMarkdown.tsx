@@ -1,6 +1,7 @@
 'use client'
 
-import React, { memo } from 'react'
+import type React from 'react'
+import { memo } from 'react'
 import ReactMarkdown from 'react-markdown'
 import rehypeRaw from 'rehype-raw'
 import rehypeStringify from 'rehype-stringify'
@@ -10,6 +11,7 @@ import rehypeKatex from 'rehype-katex'
 import 'katex/dist/katex.min.css'
 import remarkTextr from 'remark-textr'
 import { advancedSmartypants } from '@/lib/smartypants'
+import remarkGfm from 'remark-gfm'
 
 // Import the correct types
 import type { Plugin } from 'unified'
@@ -39,6 +41,7 @@ const EnhancedMarkdownComponent: React.FC<EnhancedMarkdownProps> = ({
           remarkMath,
           [remarkTextr, { plugins: [advancedSmartypants] }],
           [mermaidPlugin, {}],
+          remarkGfm,
         ]}
         rehypePlugins={[rehypeRaw, rehypeStringify, rehypeKatex]}
         components={{
@@ -56,6 +59,39 @@ const EnhancedMarkdownComponent: React.FC<EnhancedMarkdownProps> = ({
             <code className={`font-mono text-base ${className || ''}`} {...props}>
               {children}
             </code>
+          ),
+          // Add custom table components with border styling
+          table: ({ children, className, ...props }) => (
+            <div className="my-6 w-full overflow-x-auto">
+              <table className={`w-full border-collapse ${className || ''}`} {...props}>
+                {children}
+              </table>
+            </div>
+          ),
+          thead: ({ children, ...props }) => (
+            <thead className="bg-muted/50" {...props}>
+              {children}
+            </thead>
+          ),
+          tbody: ({ children, ...props }) => (
+            <tbody className="divide-y divide-border" {...props}>
+              {children}
+            </tbody>
+          ),
+          tr: ({ children, ...props }) => (
+            <tr className="border-b border-border" {...props}>
+              {children}
+            </tr>
+          ),
+          th: ({ children, ...props }) => (
+            <th className="border border-border px-4 py-2 text-left font-semibold" {...props}>
+              {children}
+            </th>
+          ),
+          td: ({ children, ...props }) => (
+            <td className="border border-border px-4 py-2" {...props}>
+              {children}
+            </td>
           ),
         }}
       >
