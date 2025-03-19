@@ -70,20 +70,15 @@ function EditorComponent({ onSubmit, isSubmitting }: EditorProps) {
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
+      role="img"
     >
-      <circle
-        className="opacity-25"
-        cx="12"
-        cy="12"
-        r="10"
-        stroke="currentColor"
-        strokeWidth="4"
-      ></circle>
+      <title>Loading</title>
+      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
       <path
         className="opacity-75"
         fill="currentColor"
         d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-      ></path>
+      />
     </svg>
   )
 
@@ -146,7 +141,7 @@ function EditorComponent({ onSubmit, isSubmitting }: EditorProps) {
                   </div>
                   <div
                     ref={previewRef}
-                    className="prose prose-lg dark:prose-invert scrollbar-custom flex-1 overflow-auto p-6"
+                    className="scrollbar-custom prose prose-lg flex-1 overflow-auto p-6 dark:prose-invert"
                   >
                     {content ? (
                       <EnhancedMarkdown content={content} />
@@ -235,7 +230,7 @@ function EditorComponent({ onSubmit, isSubmitting }: EditorProps) {
 
               {activeTab === 'preview' && (
                 <div className="relative m-0 flex-1 overflow-hidden border-0 p-0">
-                  <div className="prose prose-lg dark:prose-invert scrollbar-custom absolute inset-0 max-w-none overflow-auto p-6">
+                  <div className="scrollbar-custom prose prose-lg absolute inset-0 max-w-none overflow-auto p-6 dark:prose-invert">
                     {content ? (
                       <EnhancedMarkdown content={content} />
                     ) : (

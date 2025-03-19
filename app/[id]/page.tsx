@@ -75,7 +75,7 @@ export default function PastePage() {
     <main className="flex min-h-screen flex-col">
       <Header />
 
-      <div className="container mx-auto flex-1 px-4 py-8">
+      <div className="container mx-auto max-w-7xl flex-1 px-4 py-8">
         <div className="mb-4 flex flex-wrap items-center justify-between gap-4">
           <div className="space-y-2">
             <h2 className="text-xl font-semibold">
@@ -115,7 +115,7 @@ export default function PastePage() {
               <Skeleton className="h-4 w-2/3 rounded" />
             </div>
           ) : (
-            <div className="prose prose-sm dark:prose-invert md:prose max-w-none p-6">
+            <div className="prose prose-sm max-w-none p-6 dark:prose-invert md:prose-lg">
               <EnhancedMarkdown content={paste?.content || ''} />
             </div>
           )}
