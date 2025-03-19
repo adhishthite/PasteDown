@@ -123,14 +123,6 @@ function EditorComponent({ onSubmit, isSubmitting }: EditorProps) {
                       onChange={handleContentChange}
                       disabled={isSubmitting}
                     />
-                    {isSubmitting && (
-                      <div className="absolute inset-0 flex items-center justify-center bg-background/50 backdrop-blur-sm">
-                        <div className="flex items-center gap-2 rounded-md bg-primary px-4 py-2 font-medium text-primary-foreground">
-                          <LoadingSpinner />
-                          Creating paste...
-                        </div>
-                      </div>
-                    )}
                   </div>
                 </div>
 
@@ -151,16 +143,18 @@ function EditorComponent({ onSubmit, isSubmitting }: EditorProps) {
                       </p>
                     )}
                   </div>
-                  {isSubmitting && (
-                    <div className="absolute inset-0 flex items-center justify-center bg-background/50 backdrop-blur-sm">
-                      <div className="flex items-center gap-2 rounded-md bg-primary px-4 py-2 font-medium text-primary-foreground">
-                        <LoadingSpinner />
-                        Creating paste...
-                      </div>
-                    </div>
-                  )}
                 </div>
               </div>
+
+              {/* Single loading overlay for the entire editor */}
+              {isSubmitting && (
+                <div className="absolute inset-0 flex items-center justify-center bg-background/50 backdrop-blur-sm">
+                  <div className="flex items-center gap-2 rounded-md bg-primary px-4 py-2 font-medium text-primary-foreground">
+                    <LoadingSpinner />
+                    Creating paste...
+                  </div>
+                </div>
+              )}
             </Card>
           </motion.div>
         </div>
@@ -217,14 +211,6 @@ function EditorComponent({ onSubmit, isSubmitting }: EditorProps) {
                     onChange={handleContentChange}
                     disabled={isSubmitting}
                   />
-                  {isSubmitting && (
-                    <div className="absolute inset-0 flex items-center justify-center bg-background/50 backdrop-blur-sm">
-                      <div className="flex items-center gap-2 rounded-md bg-primary px-4 py-2 font-medium text-primary-foreground">
-                        <LoadingSpinner />
-                        Creating paste...
-                      </div>
-                    </div>
-                  )}
                 </div>
               )}
 
@@ -239,14 +225,16 @@ function EditorComponent({ onSubmit, isSubmitting }: EditorProps) {
                       </p>
                     )}
                   </div>
-                  {isSubmitting && (
-                    <div className="absolute inset-0 flex items-center justify-center bg-background/50 backdrop-blur-sm">
-                      <div className="flex items-center gap-2 rounded-md bg-primary px-4 py-2 font-medium text-primary-foreground">
-                        <LoadingSpinner />
-                        Creating paste...
-                      </div>
-                    </div>
-                  )}
+                </div>
+              )}
+
+              {/* Single loading overlay for the entire editor */}
+              {isSubmitting && (
+                <div className="absolute inset-0 flex items-center justify-center bg-background/50 backdrop-blur-sm">
+                  <div className="flex items-center gap-2 rounded-md bg-primary px-4 py-2 font-medium text-primary-foreground">
+                    <LoadingSpinner />
+                    Creating paste...
+                  </div>
                 </div>
               )}
             </Tabs>
