@@ -1,19 +1,54 @@
 import * as React from "react"
 
-const MOBILE_BREAKPOINT = 768
+export enum Breakpoint {
+  MOBILE = 480,
+  TABLET = 768,
+  DESKTOP = 1024,
+  LARGE = 1280
+}
 
-export function useIsMobile() {
-  const [isMobile, setIsMobile] = React.useState<boolean | undefined>(undefined)
+export type BreakpointState = {
+  isMobile: boolean
+  isTablet: boolean
+  isDesktop: boolean
+  isLarge: boolean
+  activeBreakpoint: 'mobile' | 'tablet' | 'desktop' | 'large'
+}
+
+export function useBreakpoints() {
+  const [breakpoints, setBreakpoints] = React.useState<BreakpointState>({
+    isMobile: false,
+    isTablet: false,
+    isDesktop: false,
+    isLarge: false,
+    activeBreakpoint: 'desktop'
+  })
 
   React.useEffect(() => {
-    const mql = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`)
-    const onChange = () => {
-      setIsMobile(window.innerWidth < MOBILE_BREAKPOINT)
+    const updateBreakpoints = () => {
+      const width = window.innerWidth
+      setBreakpoints({
+        isMobile: width < Breakpoint.TABLET,
+        isTablet: width >= Breakpoint.MOBILE && width < Breakpoint.DESKTOP,
+        isDesktop: width >= Breakpoint.DESKTOP && width < Breakpoint.LARGE,
+        isLarge: width >= Breakpoint.LARGE,
+        activeBreakpoint: 
+          width < Breakpoint.TABLET ? 'mobile' :
+          width < Breakpoint.DESKTOP ? 'tablet' :
+          width < Breakpoint.LARGE ? 'desktop' : 'large'
+      })
     }
-    mql.addEventListener("change", onChange)
-    setIsMobile(window.innerWidth < MOBILE_BREAKPOINT)
-    return () => mql.removeEventListener("change", onChange)
+    
+    updateBreakpoints()
+    window.addEventListener("resize", updateBreakpoints)
+    return () => window.removeEventListener("resize", updateBreakpoints)
   }, [])
 
-  return !!isMobile
+  return breakpoints
+}
+
+// Keep original functionality for backwards compatibility
+export function useIsMobile() {
+  const { isMobile } = useBreakpoints()
+  return isMobile
 }
